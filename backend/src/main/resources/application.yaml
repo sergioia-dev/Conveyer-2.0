@@ -1,0 +1,68 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: backend
+
+  mvc:
+    apiversion:
+      use:
+        header: X-API-Version
+      supported:
+        - 1
+      default: 1
+
+  web:
+    resources:
+      cache:
+        period: 0
+  cache:
+    type: redis
+
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+
+  datasource:
+    url: ${POSTGRES_URL} 
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD} 
+
+  sql:
+    init:
+      mode: always
+
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: create-drop  # create update create-drop
+    defer-datasource-initialization: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: ${GITHUB_CLIENT_ID}
+            client-secret: ${GITHUB_CLIENT_SECRET}
+            scope:
+              - user:email
+              - read:user
+
+  mail:
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  thymeleaf:
+    cache: false
+    check-template-location: true
